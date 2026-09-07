@@ -1,0 +1,113 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+/* Explicit keyframes (kept outside Tailwind's generated output) so raw CSS
+   `animation:` declarations below always resolve, regardless of whether the
+   matching `animate-*` utility class is also used anywhere in JSX. */
+@keyframes blob {
+  0%, 100% { transform: translate(0px, 0px) scale(1); }
+  33% { transform: translate(30px, -40px) scale(1.08); }
+  66% { transform: translate(-25px, 25px) scale(0.95); }
+}
+
+html, body, #root {
+  height: 100%;
+  min-height: 100vh;
+  background: #0A0B14;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  color: #F1F0F7;
+  background: #0A0B14;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Full-page animated dark backdrop used behind every route */
+.app-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  background: radial-gradient(ellipse 120% 80% at 50% -10%, #171a2c 0%, #0A0B14 55%);
+}
+
+.app-backdrop::before,
+.app-backdrop::after {
+  content: '';
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(90px);
+  opacity: 0.35;
+}
+
+.app-backdrop::before {
+  width: 42vw;
+  height: 42vw;
+  top: -10%;
+  left: -8%;
+  background: #7C6AEF;
+  animation: blob 16s infinite ease-in-out;
+}
+
+.app-backdrop::after {
+  width: 36vw;
+  height: 36vw;
+  bottom: -12%;
+  right: -6%;
+  background: #4DD8E8;
+  animation: blob 20s infinite ease-in-out reverse;
+}
+
+.grid-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(rgba(124, 106, 239, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(124, 106, 239, 0.05) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 20%, black 40%, transparent 90%);
+}
+
+::selection {
+  background: #7C6AEF;
+  color: #0A0B14;
+}
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: #0A0B14; }
+::-webkit-scrollbar-thumb { background: #242739; border-radius: 8px; }
+::-webkit-scrollbar-thumb:hover { background: #35395a; }
+
+.glass-card {
+  background: rgba(18, 20, 31, 0.72);
+  border: 1px solid #242739;
+  backdrop-filter: blur(14px);
+}
+
+.text-gradient {
+  background: linear-gradient(100deg, #F5B942 0%, #7C6AEF 55%, #4DD8E8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.focus-ring:focus-visible {
+  outline: 2px solid #7C6AEF;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
